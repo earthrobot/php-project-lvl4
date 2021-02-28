@@ -22,7 +22,7 @@ test:
 	php artisan test
 
 test-coverage:
-	./vendor/bin/phpunit -- tests --whitelist tests --coverage-clover coverage-report
+	composer phpunit -- tests --whitelist tests --coverage-clover coverage-report
 
 deploy:
 	git push heroku
