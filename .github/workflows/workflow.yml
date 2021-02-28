@@ -39,7 +39,3 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: task_manager
-        with:
-          coverageCommand: make test-coverage
-          coverageLocations: ${{github.workspace}}/coverage-report:clover
-          debug: true
