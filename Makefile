@@ -21,6 +21,9 @@ console:
 test:
 	php artisan test
 
+test-coverage:
+	composer phpunit -- tests --whitelist tests --coverage-clover coverage-report
+
 deploy:
 	git push heroku
 
