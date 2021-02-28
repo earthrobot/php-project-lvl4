@@ -1,7 +1,9 @@
-<<<<<<< HEAD
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/earthrobot/php-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/earthrobot/php-project-lvl4/actions)
-=======
+[![Maintainability](https://api.codeclimate.com/v1/badges/a65eb3a26e7322f6e9e0/maintainability)](https://codeclimate.com/github/earthrobot/php-project-lvl4/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a65eb3a26e7322f6e9e0/test_coverage)](https://codeclimate.com/github/earthrobot/php-project-lvl4/test_coverage)
+[![Actions Status](https://github.com/earthrobot/php-project-lvl4/workflows/workflow/badge.svg)](https://github.com/earthrobot/php-project-lvl4/actions)
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
@@ -64,4 +66,3 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> install laravel
