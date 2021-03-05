@@ -16,6 +16,7 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
+        "laravelcollective/html": "^6.2",
         "phpunit/phpunit": "^9.5",
         "rollbar/rollbar-laravel": "^7.0",
         "squizlabs/php_codesniffer": "*"
@@ -42,7 +43,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/HtmlHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

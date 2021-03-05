@@ -32,3 +32,6 @@ lint:
 
 lint-fix:
 	composer phpcbf
+
+seed statuses:
+	php artisan db:seed --class=TaskStatusSeeder

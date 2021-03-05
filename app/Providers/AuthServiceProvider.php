@@ -25,6 +25,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('crud-status', function (\App\Models\User $user) {
+            return true;
+        });
+
+        // Gate::define('delete-status', function (User $user, TaskStatus $taskStatus) {
+        //     //return $user->id === $taskStatus->user_id;
+        //     return $taskStatus->creator->is($user);
+        // });
     }
 }
