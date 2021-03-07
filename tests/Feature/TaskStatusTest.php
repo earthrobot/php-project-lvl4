@@ -10,36 +10,44 @@ use App\Models\User;
 
 class TaskStatusTest extends TestCase
 {
+    use RefreshDatabase;
+
+    protected $user;
+    protected $taskStatus;
+
     protected function setUp(): void
     {
         parent::setUp();
-        TaskStatus::factory()->count(2)->make();
+        \Artisan::call('migrate');
+        \Artisan::call('db:seed');
+
+        $this->user = User::factory()->create();
+        $this->taskStatus = TaskStatus::factory()->create();
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $response = $this->get(route('task_statuses.index'));
         $response->assertOk();
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
             ->get(route('task_statuses.create'));
-            $response->assertOk();
-    }
-
-    public function testEdit()
-    {
-        $user = User::factory()->create();
-        $taskStatus = TaskStatus::factory()->create();
-        $response = $this->actingAs($user)
-            ->get(route('task_statuses.edit', [$taskStatus]));
         $response->assertOk();
     }
 
-    public function testStore()
+    public function testEdit(): void
+    {
+        //$taskStatus = TaskStatus::factory()->create();
+        $response = $this->actingAs($this->user)
+            ->get(route('task_statuses.edit', [$this->taskStatus]));
+        $response->assertOk();
+        //$taskStatus->delete();
+    }
+
+    public function testStore(): void
     {
         $factoryData = TaskStatus::factory()->make()->toArray();
         $data = \Arr::only($factoryData, ['name']);
@@ -48,29 +56,32 @@ class TaskStatusTest extends TestCase
         $response->assertRedirect();
 
         $this->assertDatabaseHas('task_statuses', $data);
+        //$taskStatus = TaskStatus::orderBy('id', 'desc')->take(1);
+        //$taskStatus->delete();
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
-        $taskStatus = TaskStatus::factory()->create();
-        $factoryData = TaskStatus::factory()->make()->toArray();
+        //$taskStatus = TaskStatus::factory()->create();
+        $factoryData = $this->taskStatus->toArray();
         $data = \Arr::only($factoryData, ['name']);
-        $response = $this->patch(route('task_statuses.update', $taskStatus), $data);
+        $response = $this->patch(route('task_statuses.update', $this->taskStatus), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
         $this->assertDatabaseHas('task_statuses', $data);
+        //$taskStatus->delete();
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
-        $user = User::factory()->create();
-        $taskStatus = TaskStatus::factory()->create();
-        $response = $this->actingAs($user)
-            ->delete(route('task_statuses.destroy', [$taskStatus]));
+        //$taskStatus = TaskStatus::factory()->create();
+        $response = $this->actingAs($this->user)
+            ->delete(route('task_statuses.destroy', [$this->taskStatus]));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatus->id]);
+        $this->assertDatabaseMissing('task_statuses', ['id' => $this->taskStatus->id]);
+        //$taskStatus->delete();
     }
 }

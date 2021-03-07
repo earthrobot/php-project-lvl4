@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Models\Task;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,13 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('crud-status', function (\App\Models\User $user) {
+        Gate::define('crud', function (User $user) {
             return true;
         });
 
-        // Gate::define('delete-status', function (User $user, TaskStatus $taskStatus) {
-        //     //return $user->id === $taskStatus->user_id;
-        //     return $taskStatus->creator->is($user);
-        // });
+        Gate::define('delete-task', function (User $user, Task $task) {
+            return $task->createdBy->is($user);
+        });
     }
 }

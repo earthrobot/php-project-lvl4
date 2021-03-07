@@ -25,7 +25,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        $this->authorize('crud-status');
+        $this->authorize('crud');
         $taskStatus = new TaskStatus();
         return view('task_statuses.create', compact('taskStatus'));
     }
@@ -71,7 +71,7 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        $this->authorize('crud-status');
+        $this->authorize('crud');
         return view('task_statuses.edit', compact('taskStatus'));
     }
 
@@ -85,7 +85,7 @@ class TaskStatusController extends Controller
     public function update(Request $request, TaskStatus $taskStatus)
     {
         $data = $this->validate($request, [
-            'name' => 'required|unique:task_statuses'
+            'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
 
         $taskStatus->fill($data);
@@ -105,17 +105,18 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        $this->authorize('crud-status');
-        if ($taskStatus) {
-            $taskStatus->delete();
-            flash(__('messages.status_delete_success'))->success();
+        $this->authorize('crud');
+        try {
+            if ($taskStatus) {
+                $taskStatus->delete();
+                flash(__('messages.status_delete_success'))->success();
+            }
+        } catch (\Exception $e) {
+            flash(__('messages.status_update_fail'))->error();
         }
+
+
         return redirect()
             ->route('task_statuses.index');
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(User::class);
     }
 }
