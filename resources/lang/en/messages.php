@@ -63,5 +63,20 @@ return [
     'task_name' => 'Name',
     'task_status' => 'Status',
     'task_description' => 'Description',
+    'labels_index_page_title' => 'Labels',
+    'create_label' => 'Create label',
+    'label_table_id' => 'ID',
+    'label_table_name' => 'Name',
+    'label_table_description' => 'Description',
+    'label_table_created_at' => 'Created at',
+    'label_table_actions' => 'Actions',
+    'label_table_no_data' => 'No label has been created yet.',
+    'label_store_success' => 'Label created successfully',
+    'label_update_success' => 'Label updated successfully',
+    'label_delete_success' => 'Label deleted successfully',
+    'label_delete_fail' => 'Could not delete label',
+    'labels_label' => 'Labels',
+    'task_labels' => 'Labels',
+
 
 ];

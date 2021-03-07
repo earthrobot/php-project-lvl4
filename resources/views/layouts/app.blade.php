@@ -36,6 +36,7 @@
                     <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link {{ HtmlHelper::highlightCurrentLink('tasks.index') }}" href="{{ route('tasks.index', false) }}">{{ __('messages.tasks_index_page_title') }}</a></li>
                         <li><a class="nav-link {{ HtmlHelper::highlightCurrentLink('task_statuses.index') }}" href="{{ route('task_statuses.index', false) }}">{{ __('messages.statuses_index_page_title') }}</a></li>
+                        <li><a class="nav-link {{ HtmlHelper::highlightCurrentLink('labels.index') }}" href="{{ route('labels.index', false) }}">{{ __('messages.labels_index_page_title') }}</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

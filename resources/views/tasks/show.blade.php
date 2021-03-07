@@ -8,4 +8,12 @@
 <p>{{ __('messages.task_name') }}: {{ $task->name }}</p>
 <p>{{ __('messages.task_status') }}: {{ $task->status->name }}</p>
 <p>{{ __('messages.task_description') }}: {{ $task->description }}</p>
+@if ($task->labels)
+    <p>{{ __('messages.task_labels') }}:</p>
+    <ul>
+    @foreach ($task->labels as $label)
+        <li>{{ $label->name }}</li>
+    @endforeach
+    </ul>
+@endif
 @endsection

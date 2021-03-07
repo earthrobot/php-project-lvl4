@@ -64,5 +64,20 @@ return [
     'task_name' => 'Имя',
     'task_status' => 'Статус',
     'task_description' => 'Описание',
+    'labels_index_page_title' => 'Метки',
+    'create_label' => 'Создать метку',
+    'label_table_id' => 'ID',
+    'label_table_name' => 'Имя',
+    'label_table_description' => 'Описание',
+    'label_table_created_at' => 'Дата создания',
+    'label_table_actions' => 'Действия',
+    'label_table_no_data' => 'Не создано еще ни одной метки.',
+    'label_store_success' => 'Метка успешно создана',
+    'label_update_success' => 'Метка успешно обновлена',
+    'label_delete_success' => 'Метка успешно удалена',
+    'label_delete_fail' => 'Не удалось удалить метку',
+    'labels_label' => 'Метки',
+    'task_labels' => 'Метки',
+
 
 ];

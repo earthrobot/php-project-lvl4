@@ -5,15 +5,15 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\Label;
 
-class TaskStatusTest extends TestCase
+class LabelTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $user;
-    protected $taskStatus;
+    protected $label;
 
     protected function setUp(): void
     {
@@ -22,58 +22,58 @@ class TaskStatusTest extends TestCase
         \Artisan::call('db:seed');
 
         $this->user = User::factory()->create();
-        $this->taskStatus = TaskStatus::factory()->create();
+        $this->label = Label::factory()->create();
     }
 
     public function testIndex(): void
     {
-        $response = $this->get(route('task_statuses.index'));
+        $response = $this->get(route('labels.index'));
         $response->assertOk();
     }
 
     public function testCreate(): void
     {
         $response = $this->actingAs($this->user)
-            ->get(route('task_statuses.create'));
+            ->get(route('labels.create'));
         $response->assertOk();
     }
 
     public function testEdit(): void
     {
         $response = $this->actingAs($this->user)
-            ->get(route('task_statuses.edit', [$this->taskStatus]));
+            ->get(route('labels.edit', [$this->label]));
         $response->assertOk();
     }
 
     public function testStore(): void
     {
-        $factoryData = TaskStatus::factory()->make()->toArray();
+        $factoryData = Label::factory()->make()->toArray();
         $data = \Arr::only($factoryData, ['name']);
-        $response = $this->post(route('task_statuses.store'), $data);
+        $response = $this->post(route('labels.store'), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('task_statuses', $data);
+        $this->assertDatabaseHas('labels', $data);
     }
 
     public function testUpdate(): void
     {
-        $factoryData = $this->taskStatus->toArray();
+        $factoryData = $this->label->toArray();
         $data = \Arr::only($factoryData, ['name']);
-        $response = $this->patch(route('task_statuses.update', $this->taskStatus), $data);
+        $response = $this->patch(route('labels.update', $this->label), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('task_statuses', $data);
+        $this->assertDatabaseHas('labels', $data);
     }
 
     public function testDestroy(): void
     {
         $response = $this->actingAs($this->user)
-            ->delete(route('task_statuses.destroy', [$this->taskStatus]));
+            ->delete(route('labels.destroy', [$this->label]));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseMissing('task_statuses', ['id' => $this->taskStatus->id]);
+        $this->assertDatabaseMissing('labels', ['id' => $this->label->id]);
     }
 }

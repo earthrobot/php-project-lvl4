@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,7 +37,10 @@ class TaskController extends Controller
         $users = User::all()->mapWithKeys(function ($item) {
             return [$item['id'] => $item['name']];
         })->toArray();
-        return view('tasks.create', compact('task', 'task_statuses', 'users'));
+        $labels = Label::all()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+        return view('tasks.create', compact('task', 'task_statuses', 'users', 'labels'));
     }
 
     /**
@@ -49,8 +53,10 @@ class TaskController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|max:255',
+            'description' => '',
             'status_id' => 'required',
-            'assigned_to_id' => ''
+            'assigned_to_id' => '',
+            'labels' => ''
         ]);
 
         $task = new Task();
@@ -90,7 +96,16 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $this->authorize('crud');
-        return view('tasks.edit', compact('task'));
+        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+        $users = User::all()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+        $labels = Label::all()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+        return view('tasks.edit', compact('task', 'task_statuses', 'users', 'labels'));
     }
 
     /**
@@ -104,10 +119,22 @@ class TaskController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|max:255',
-            'status_id' => 'required'
+            'description' => '',
+            'status_id' => 'required',
+            'assigned_to_id' => '',
+            'labels' => ''
         ]);
 
         $task->fill($data);
+
+        if (array_key_exists('assigned_to_id', $data) && $data['assigned_to_id'] != '') {
+            $task->assignedTo()->associate($data['assigned_to_id']);
+        }
+
+        if (array_key_exists('labels', $data) && $data['labels'] != '') {
+            $task->labels()->sync($data['labels']);
+        }
+
         $task->save();
 
         flash(__('messages.task_update_success'))->success();
