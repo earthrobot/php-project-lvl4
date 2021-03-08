@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
@@ -16,10 +18,26 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::all();
-        return view('tasks.index', compact('tasks'));
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+            ])
+            ->get();
+
+        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+        $users = User::all()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+
+        $filter = $request->get('filter');
+
+        return view('tasks.index', compact('tasks', 'task_statuses', 'users', 'filter'));
     }
 
     /**

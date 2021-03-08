@@ -3,9 +3,19 @@
 @section('content')
 <h1 class="mb-5">{{ __('messages.tasks_index_page_title') }}</h1>
 
-@auth
-<a href="{{ route('tasks.create') }}" class="btn btn-primary">{{ __('messages.create_task') }}</a>
-@endauth
+<div class="d-flex">
+    <div>
+        {{ Form::model($tasks, ['url' => route('tasks.index'), 'method' => 'GET', 'class' => 'form-inline']) }}
+            {{ Form::select('filter[status_id]', $task_statuses, $filter['status_id'] ?? null, ['placeholder' => 'Статус','class' => 'form-control mr-2']) }}
+            {{ Form::select('filter[created_by_id]', $users, $filter['created_by_id'] ?? null, ['placeholder' => 'Автор','class' => 'form-control mr-2']) }}
+            {{ Form::select('filter[assigned_to_id]', $users, $filter['assigned_to_id'] ?? null, ['placeholder' => 'Исполнитель','class' => 'form-control mr-2']) }}
+            {{ Form::submit(__('Применить'), ['class' => 'btn btn-outline-primary mr-2']) }}
+        {{ Form::close() }}
+    </div>
+    @auth
+        <a href="{{ route('tasks.create') }}" class="btn btn-primary ml-auto">{{ __('messages.create_task') }}</a>
+    @endauth
+</div>
 <table class="table mt-2">
     <thead>
         <tr>
