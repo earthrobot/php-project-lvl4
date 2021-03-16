@@ -4,20 +4,44 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a65eb3a26e7322f6e9e0/test_coverage)](https://codeclimate.com/github/earthrobot/php-project-lvl4/test_coverage)
 [![Actions Status](https://github.com/earthrobot/php-project-lvl4/workflows/workflow/badge.svg)](https://github.com/earthrobot/php-project-lvl4/actions)
 
-## Описание
+## About
 
-Task Manager – система управления задачами, которая позволяет ставить задачи, назначать исполнителей и менять их статусы. Для работы с системой требуется регистрация и аутентификация.
+Task Manager is a task management system, which allows you to set tasks, assign performers and change their statuses. Registration and authentication are required to work with the system.
 
-## Демонстрация проекта
+## Demo
 
-[Попробовать Task Manager в действии](http://young-plateau-29423.herokuapp.com/)
+[Try Task Manager](http://young-plateau-29423.herokuapp.com/)
 
-## Развернуть проект локально
+## Setup
 
 ```sh
 $ make setup
 ```
 
-## Зависимости
+## Run
 
+```sh
+$ make start
+```
 
+## Run tests
+
+```sh
+$ make test
+```
+
+## Run linter
+
+```sh
+$ make lint
+```
+
+## Requirements
+
+  * PHP ^7.3.0
+  * Extensions: mbstring, curl, dom, xml,zip, sqlite3
+  * Composer
+  * Node.js & npm
+  * [heroku cli](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+  * SQLite для локальной разработки
+  * Ubuntu 18.04
