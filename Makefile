@@ -7,7 +7,7 @@ setup:
 	php artisan key:gen --ansi
 	php artisan migrate
 	php artisan db:seed
-	npm install
+	npm ci
 
 watch:
 	npm run watch
@@ -19,7 +19,7 @@ console:
 	php artisan tinker
 
 test:
-	php artisan test
+	php artisan test -- tests --whitelist tests --coverage-clover coverage-report
 
 test-coverage:
 	composer phpunit -- tests --whitelist tests --coverage-clover coverage-report
@@ -28,7 +28,7 @@ deploy:
 	git push heroku
 
 lint:
-	composer exec -v phpcs
+	composer phpcs
 
 lint-fix:
 	composer phpcbf

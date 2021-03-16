@@ -28,10 +28,10 @@ jobs:
           php-version: '7.4'
       - name: Setup
         run: make setup
-      - name: Run test
-        run: make test
       - name: Run linter
         run: make lint
+      - name: Run test
+        run: make test
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:
