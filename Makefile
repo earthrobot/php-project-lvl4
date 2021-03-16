@@ -19,19 +19,16 @@ console:
 	php artisan tinker
 
 test:
-	php artisan test -- tests --whitelist tests --coverage-clover coverage-report
+	php artisan test
 
 test-coverage:
-	composer phpunit -- tests --whitelist tests --coverage-clover coverage-report
+	php artisan test --coverage-clover coverage-report
 
 deploy:
 	git push heroku
 
 lint:
-	composer phpcs
+	composer exec phpcs -v
 
 lint-fix:
-	composer phpcbf
-
-seed statuses:
-	php artisan db:seed --class=TaskStatusSeeder
+	composer exec phpcbf -v
