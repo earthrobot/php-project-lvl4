@@ -2,24 +2,18 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Label;
 
 class LabelTest extends TestCase
 {
-    use RefreshDatabase;
-
     protected $user;
     protected $label;
 
     protected function setUp(): void
     {
         parent::setUp();
-        \Artisan::call('migrate');
-        \Artisan::call('db:seed');
 
         $this->user = User::factory()->create();
         $this->label = Label::factory()->create();

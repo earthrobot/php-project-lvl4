@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Task;
 use App\Models\TaskStatus;
@@ -12,16 +10,13 @@ use App\Models\Label;
 
 class TaskTest extends TestCase
 {
-    //use RefreshDatabase;
-
     protected $user;
     protected $task;
 
     protected function setUp(): void
     {
         parent::setUp();
-        \Artisan::call('migrate');
-        \Artisan::call('db:seed');
+        $this->seed();
 
         $this->user = User::factory()->create();
         $this->task = Task::factory()
