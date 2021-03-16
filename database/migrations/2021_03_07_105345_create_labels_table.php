@@ -39,6 +39,7 @@ class CreateLabelsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('label_task');
         Schema::dropIfExists('labels');
     }
 }
