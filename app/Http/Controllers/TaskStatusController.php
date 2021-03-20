@@ -15,7 +15,8 @@ class TaskStatusController extends Controller
     public function index()
     {
         $taskStatuses = TaskStatus::all();
-        return view('task_statuses.index', compact('taskStatuses'));
+        return response()
+            ->view('task_statuses.index', compact('taskStatuses'));
     }
 
     /**
@@ -61,7 +62,8 @@ class TaskStatusController extends Controller
     public function show(TaskStatus $taskStatus)
     {
         $this->authorize('admin');
-        return view('task_statuses.show', compact('taskStatus'));
+        return response()
+            ->view('task_statuses.show', compact('taskStatus'));
     }
 
     /**
@@ -73,7 +75,8 @@ class TaskStatusController extends Controller
     public function edit(TaskStatus $taskStatus)
     {
         $this->authorize('crud');
-        return view('task_statuses.edit', compact('taskStatus'));
+        return response()
+            ->view('task_statuses.edit', compact('taskStatus'));
     }
 
     /**
@@ -115,7 +118,6 @@ class TaskStatusController extends Controller
         } catch (\Exception $e) {
             flash(__('messages.status_update_fail'))->error();
         }
-
 
         return redirect()
             ->route('task_statuses.index');
