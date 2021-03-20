@@ -27,16 +27,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('admin', function (User $user) {
+        Gate::define('admin', function (User $user): bool {
             return false;
         });
 
-        Gate::define('crud', function (User $user) {
+        Gate::define('crud', function (User $user): bool {
             return true;
         });
 
         Gate::define('delete-task', function (User $user, Task $task) {
-            return $task->createdBy->is($user);
+            return $task->createdBy()->is($user);
         });
     }
 }
