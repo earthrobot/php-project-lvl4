@@ -3,13 +3,14 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Arr;
 use App\Models\User;
 use App\Models\Label;
 
 class LabelTest extends TestCase
 {
-    protected $user;
-    protected $label;
+    private User $user;
+    private Label $label;
 
     protected function setUp(): void
     {
@@ -42,7 +43,7 @@ class LabelTest extends TestCase
     public function testStore(): void
     {
         $factoryData = Label::factory()->make()->toArray();
-        $data = \Arr::only($factoryData, ['name']);
+        $data = Arr::only($factoryData, ['name']);
         $response = $this->post(route('labels.store'), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
@@ -53,7 +54,7 @@ class LabelTest extends TestCase
     public function testUpdate(): void
     {
         $factoryData = $this->label->toArray();
-        $data = \Arr::only($factoryData, ['name']);
+        $data = Arr::only($factoryData, ['name']);
         $response = $this->patch(route('labels.update', $this->label), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();

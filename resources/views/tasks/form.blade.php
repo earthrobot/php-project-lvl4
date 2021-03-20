@@ -7,7 +7,7 @@
 </div>
 <div class="form-group">
     {{ Form::label('description', __('messages.description_label'), ['class' => 'control-label']) }}
-    {{ Form::text('description', $task->description ?? null, ['class' => $errors->has('description') ? 'form-control is-invalid' : 'form-control']) }}
+    {{ Form::textarea('description', $task->description ?? null, ['class' => $errors->has('description') ? 'form-control is-invalid' : 'form-control']) }}
     @error('description')
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror

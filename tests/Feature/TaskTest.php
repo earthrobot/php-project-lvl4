@@ -3,15 +3,15 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Arr;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use App\Models\Label;
 
 class TaskTest extends TestCase
 {
-    protected $user;
-    protected $task;
+    private User $user;
+    private Task $task;
 
     protected function setUp(): void
     {
@@ -47,7 +47,7 @@ class TaskTest extends TestCase
     public function testStore(): void
     {
         $factoryData = Task::factory()->make()->toArray();
-        $data = \Arr::only($factoryData, ['name', 'status_id']);
+        $data = Arr::only($factoryData, ['name', 'status_id', 'labels']);
         $response = $this->actingAs($this->user)->post(route('tasks.store'), $data);
 
         $response->assertSessionHasNoErrors();
@@ -59,7 +59,7 @@ class TaskTest extends TestCase
     public function testUpdate(): void
     {
         $factoryData = $this->task->toArray();
-        $data = \Arr::only($factoryData, ['name', 'status_id']);
+        $data = Arr::only($factoryData, ['name', 'status_id', 'labels']);
         $response = $this->actingAs($this->user)->patch(route('tasks.update', $this->task), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();

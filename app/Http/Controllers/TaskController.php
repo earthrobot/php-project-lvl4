@@ -149,8 +149,9 @@ class TaskController extends Controller
             $task->assignedTo()->associate($data['assigned_to_id']);
         }
 
-        if (array_key_exists('labels', $data) && $data['labels'] != '') {
-            $task->labels()->sync($data['labels']);
+        if (array_key_exists('labels', $data)) {
+            $labels = array_filter($data['labels']);
+            $task->labels()->sync($labels);
         }
 
         $task->save();
