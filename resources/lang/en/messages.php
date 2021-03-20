@@ -75,6 +75,7 @@ return [
     'label_update_success' => 'Label updated successfully',
     'label_delete_success' => 'Label deleted successfully',
     'label_delete_fail' => 'Could not delete label',
+    'edit_label' => 'Edit label',
     'labels_label' => 'Labels',
     'task_labels' => 'Labels',
     'labels_show_page_title' => 'Label',
