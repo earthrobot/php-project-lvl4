@@ -35,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
             return true;
         });
 
-        Gate::define('delete-task', function (User $user, Task $task) {
+        Gate::define('delete-task', function (User $user, Task $task): bool {
             return $task->createdBy()->is($user);
         });
     }

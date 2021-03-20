@@ -110,7 +110,7 @@ class LabelController extends Controller
     {
         $this->authorize('crud');
         try {
-            if ($label) {
+            if ($label->exists()) {
                 $label->delete();
                 flash(__('messages.label_delete_success'))->success();
             }

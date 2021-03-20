@@ -28,10 +28,10 @@ class TaskController extends Controller
             ])
             ->get();
 
-        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item) {
+        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
-        $users = User::all()->mapWithKeys(function ($item) {
+        $users = User::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
 
@@ -49,13 +49,13 @@ class TaskController extends Controller
     {
         $this->authorize('crud');
         $task = new Task();
-        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item) {
+        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
-        $users = User::all()->mapWithKeys(function ($item) {
+        $users = User::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
-        $labels = Label::all()->mapWithKeys(function ($item) {
+        $labels = Label::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
         return view('tasks.create', compact('task', 'task_statuses', 'users', 'labels'));
@@ -114,13 +114,13 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $this->authorize('crud');
-        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item) {
+        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
-        $users = User::all()->mapWithKeys(function ($item) {
+        $users = User::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
-        $labels = Label::all()->mapWithKeys(function ($item) {
+        $labels = Label::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
         return view('tasks.edit', compact('task', 'task_statuses', 'users', 'labels'));
@@ -171,7 +171,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $this->authorize('delete-task', $task);
-        if ($task) {
+        if ($task->exists()) {
             $task->delete();
             flash(__('messages.task_delete_success'))->success();
         }

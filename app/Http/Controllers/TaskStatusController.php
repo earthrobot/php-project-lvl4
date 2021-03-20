@@ -108,7 +108,7 @@ class TaskStatusController extends Controller
     {
         $this->authorize('crud');
         try {
-            if ($taskStatus) {
+            if ($taskStatus->exists()) {
                 $taskStatus->delete();
                 flash(__('messages.status_delete_success'))->success();
             }
