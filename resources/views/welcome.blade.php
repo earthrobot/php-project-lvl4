@@ -3,11 +3,11 @@
 @section('content')
 <div class="container">
         <div class="jumbotron">
-            <p class="display-4">Привет от Хекслета!</p>
-            <h1 class="display-4">Менеджер задач</h1>
-            <p class="lead">Task Manager – система управления задачами, подобная http://www.redmine.org/. Она позволяет ставить задачи, назначать исполнителей и менять их статусы. Для работы с системой требуется регистрация и аутентификация.</p>
+            <h1 class="display-4">{{ config('app.name', 'Менеджер задач') }}</h1>
+            <p class="lead">{{ __('messages.app_description') }}</p>
+            <p>{{ __('messages.hexlet_says_hi') }}</p>
             <hr class="my-4">
-            <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io/programs/php/projects/57" role="button">Узнать больше</a>
+            <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io/programs/php/projects/57" role="button">{{ __('messages.more') }}</a>
         </div>
     </div>
 @endsection

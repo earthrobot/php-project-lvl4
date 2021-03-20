@@ -39,7 +39,8 @@ class LabelController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, [
-            'name' => 'required|unique:labels'
+            'name' => 'required|unique:labels',
+            'description' => ''
         ]);
 
         $label = new Label();
@@ -60,6 +61,7 @@ class LabelController extends Controller
      */
     public function show(Label $label)
     {
+        $this->authorize('admin');
         return view('labels.show', compact('label'));
     }
 
@@ -86,6 +88,7 @@ class LabelController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|unique:labels,name,' . $label->id,
+            'description' => ''
         ]);
 
         $label->fill($data);

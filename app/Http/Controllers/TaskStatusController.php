@@ -60,6 +60,7 @@ class TaskStatusController extends Controller
      */
     public function show(TaskStatus $taskStatus)
     {
+        $this->authorize('admin');
         return view('task_statuses.show', compact('taskStatus'));
     }
 

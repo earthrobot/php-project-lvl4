@@ -3,7 +3,7 @@
 return [
 
     'name_label' => 'Имя',
-    'register_button' => 'Зарегистрироваться',
+    'register_button' => 'Зарегистрировать',
     'password_label' => 'Пароль',
     'email_label' => 'Email',
     'confirm_password_label' => 'Подтвердить пароль',
@@ -24,7 +24,7 @@ return [
     'toggle_nav' => 'Переключить навигацию',
     'statuses_index_page_title' => 'Статусы',
     'statuses_show_page_title' => 'Статус',
-    'logout' => 'Выйти',
+    'logout' => 'Выход',
     'create_button' => 'Создать',
     'create_status' => 'Создать статус',
     'edit_status' => 'Изменение статуса',
@@ -76,8 +76,13 @@ return [
     'label_update_success' => 'Метка успешно обновлена',
     'label_delete_success' => 'Метка успешно удалена',
     'label_delete_fail' => 'Не удалось удалить метку',
+    'edit_label' => 'Изменение метки',
     'labels_label' => 'Метки',
     'task_labels' => 'Метки',
+    'labels_show_page_title' => 'Метка',
+    'hexlet_says_hi' => 'Привет от Хекслета!',
+    'app_description' => 'Task Manager – система управления задачами, которая позволяет ставить задачи, назначать исполнителей и менять их статусы. Для работы с системой требуется регистрация и аутентификация.',
+    'more' => 'Узнать больше'
 
 
 ];

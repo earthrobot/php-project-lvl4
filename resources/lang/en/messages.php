@@ -77,6 +77,10 @@ return [
     'label_delete_fail' => 'Could not delete label',
     'labels_label' => 'Labels',
     'task_labels' => 'Labels',
+    'labels_show_page_title' => 'Label',
+    'hexlet_says_hi' => 'Hi from Hexlet!',
+    'app_description' => 'Task Manager is a task management system, which allows you to set tasks, assign performers and change their statuses. Registration and authentication are required to work with the system.',
+    'more' => 'More about it'
 
 
 ];
