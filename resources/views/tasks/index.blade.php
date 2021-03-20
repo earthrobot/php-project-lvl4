@@ -38,7 +38,7 @@
                 <td><a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a></td>
                 <td>{{ $task->createdBy->name }}</td>
                 <td>{{ $task->assignedTo->name ?? '' }}</td>
-                <td>{{ $task->created_at }}</td>
+                <td>{{ $task->toArray()['created_at'] }}</td>
                 @auth
                 <td>
                     @can('delete-task', $task)

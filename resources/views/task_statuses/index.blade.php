@@ -22,7 +22,7 @@
             <tr>
                 <td>{{ $taskStatus->id }}</td>
                 <td>{{ $taskStatus->name }}</td>
-                <td>{{ $taskStatus->created_at }}</td>
+                <td>{{ $taskStatus->toArray()['created_at'] }}</td>
                 @auth
                 <td>
                     <a class="text-danger" href="{{ route('task_statuses.destroy', $taskStatus), false }}" data-confirm="{{ __('messages.confirm_action') }}" data-method="delete" rel="nofollow">{{ __('messages.delete_link') }}</a>

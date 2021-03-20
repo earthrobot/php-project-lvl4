@@ -15,4 +15,14 @@ class Label extends Model
     {
         return $this->belongsToMany('App\Models\Task');
     }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+
+    protected $casts = [
+        'created_at' => 'datetime:d.m.Y',
+    ];
 }

@@ -24,7 +24,7 @@
                 <td>{{ $label->id }}</td>
                 <td>{{ $label->name }}</td>
                 <td>{{ $label->description }}</td>
-                <td>{{ $label->created_at }}</td>
+                <td>{{ $label->toArray()['created_at'] }}</td>
                 @auth
                 <td>
                     <a class="text-danger" href="{{ route('labels.destroy', $label), false }}" data-confirm="{{ __('messages.confirm_action') }}" data-method="delete" rel="nofollow">{{ __('messages.delete_link') }}</a>

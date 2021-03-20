@@ -9,8 +9,12 @@
 
 <p>{{ __('messages.task_name') }}: {{ $task->name }}</p>
 <p>{{ __('messages.task_status') }}: {{ $task->status->name }}</p>
+
+@if($task->description)
 <p>{{ __('messages.task_description') }}: {{ $task->description }}</p>
-@if ($task->labels)
+@endif
+
+@if(! $task->labels->isEmpty())
     <p>{{ __('messages.task_labels') }}:</p>
     <ul>
     @foreach ($task->labels as $label)
