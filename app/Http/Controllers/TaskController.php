@@ -37,7 +37,8 @@ class TaskController extends Controller
 
         $filter = $request->get('filter');
 
-        return view('tasks.index', compact('tasks', 'task_statuses', 'users', 'filter'));
+        return response()
+            ->view('tasks.index', compact('tasks', 'task_statuses', 'users', 'filter'));
     }
 
     /**
@@ -58,7 +59,9 @@ class TaskController extends Controller
         $labels = Label::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
-        return view('tasks.create', compact('task', 'task_statuses', 'users', 'labels'));
+
+        return response()
+            ->view('tasks.create', compact('task', 'task_statuses', 'users', 'labels'));
     }
 
     /**
@@ -102,7 +105,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('tasks.show', compact('task'));
+        return response()
+            ->view('tasks.show', compact('task'));
     }
 
     /**
@@ -123,7 +127,9 @@ class TaskController extends Controller
         $labels = Label::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
-        return view('tasks.edit', compact('task', 'task_statuses', 'users', 'labels'));
+
+        return response()
+            ->view('tasks.edit', compact('task', 'task_statuses', 'users', 'labels'));
     }
 
     /**

@@ -15,7 +15,8 @@ class LabelController extends Controller
     public function index()
     {
         $labels = Label::all();
-        return view('labels.index', compact('labels'));
+        return response()
+            ->view('labels.index', compact('labels'));
     }
 
     /**
@@ -27,7 +28,8 @@ class LabelController extends Controller
     {
         $this->authorize('crud');
         $label = new Label();
-        return view('labels.create', compact('label'));
+        return response()
+            ->view('labels.create', compact('label'));
     }
 
     /**
@@ -62,7 +64,9 @@ class LabelController extends Controller
     public function show(Label $label)
     {
         $this->authorize('admin');
-        return view('labels.show', compact('label'));
+
+        return response()
+            ->view('labels.show', compact('label'));
     }
 
     /**
@@ -74,7 +78,9 @@ class LabelController extends Controller
     public function edit(Label $label)
     {
         $this->authorize('crud');
-        return view('labels.edit', compact('label'));
+
+        return response()
+            ->view('labels.edit', compact('label'));
     }
 
     /**
@@ -117,7 +123,6 @@ class LabelController extends Controller
         } catch (\Exception $e) {
             flash(__('messages.label_update_fail'))->error();
         }
-
 
         return redirect()
             ->route('labels.index');

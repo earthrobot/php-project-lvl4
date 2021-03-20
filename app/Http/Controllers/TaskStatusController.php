@@ -28,14 +28,16 @@ class TaskStatusController extends Controller
     {
         $this->authorize('crud');
         $taskStatus = new TaskStatus();
-        return view('task_statuses.create', compact('taskStatus'));
+
+        return response()
+            ->view('task_statuses.create', compact('taskStatus'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
