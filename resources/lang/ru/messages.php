@@ -39,7 +39,7 @@ return [
     'status_table_no_data' => 'Пока еще не создано ни одного статуса.',
     'status_update_success' => 'Статус успешно обновлен',
     'status_store_success' => 'Статус успешно создан',
-    'status_delete_success' => 'Статус успешно удален',
+    'status_delete_success' => 'Статус успешно удалён',
     'status_update_fail' => 'Не удалось удалить статус',
     'tasks_index_page_title' => 'Задачи',
     'create_task' => 'Создать задачу',
