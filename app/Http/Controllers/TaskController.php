@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Support\Arr;
 
 class TaskController extends Controller
 {
@@ -157,7 +158,7 @@ class TaskController extends Controller
 
         if (array_key_exists('labels', $data)) {
             $labels = array_filter($data['labels']);
-            $task->labels()->sync($labels);
+            $task->labels()->sync(Arr::wrap($labels));
         }
 
         $task->save();
