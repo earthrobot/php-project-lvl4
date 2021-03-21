@@ -63,7 +63,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', $data);
 
         $newTask = Task::where($data)->first();
-        $this->assertEquals($newTask->labels()->get()->pluck('id')->toArray(), $labels);
+        $this->assertEquals($newTask->labels()->pluck('label_id')->toArray(), $labels);
     }
 
     public function testUpdate(): void
@@ -80,7 +80,7 @@ class TaskTest extends TestCase
         $response->assertRedirect();
 
         $this->assertDatabaseHas('tasks', $data);
-        $this->assertEquals($this->task->labels()->get()->pluck('id')->toArray(), $labels);
+        $this->assertEquals($this->task->labels()->pluck('label_id')->toArray(), $labels);
     }
 
     public function testDestroy(): void
