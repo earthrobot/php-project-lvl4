@@ -92,6 +92,11 @@ class TaskController extends Controller
 
         $task->save();
 
+        if (array_key_exists('labels', $data)) {
+            $labels = array_filter($data['labels']);
+            $task->labels()->sync(Arr::wrap($labels));
+        }
+
         flash(__('messages.task_store_success'))->success();
 
         return redirect()
