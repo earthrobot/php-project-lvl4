@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Arr;
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -13,7 +14,7 @@ class TaskTest extends TestCase
 {
     private User $user;
     private Task $task;
-    private $labels;
+    private Collection $labels;
 
     protected function setUp(): void
     {
@@ -62,7 +63,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', $data);
 
         $newTask = Task::where($data)->first();
-        $this->assertEquals($newTask->labels->pluck('id')->toArray(), $labels);
+        $this->assertEquals($newTask->labels()->get()->pluck('id')->toArray(), $labels);
     }
 
     public function testUpdate(): void
@@ -79,7 +80,7 @@ class TaskTest extends TestCase
         $response->assertRedirect();
 
         $this->assertDatabaseHas('tasks', $data);
-        $this->assertEquals($this->task->labels->pluck('id')->toArray(), $labels);
+        $this->assertEquals($this->task->labels()->get()->pluck('id')->toArray(), $labels);
     }
 
     public function testDestroy(): void
