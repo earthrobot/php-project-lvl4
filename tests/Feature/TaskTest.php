@@ -7,11 +7,13 @@ use Arr;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\Label;
 
 class TaskTest extends TestCase
 {
     private User $user;
     private Task $task;
+    private $labels;
 
     protected function setUp(): void
     {
@@ -22,6 +24,7 @@ class TaskTest extends TestCase
         $this->task = Task::factory()
             ->for($this->user, 'createdBy')
             ->create();
+        $this->labels = Label::factory(3)->create();
     }
 
     public function testIndex(): void
@@ -47,24 +50,36 @@ class TaskTest extends TestCase
     public function testStore(): void
     {
         $factoryData = Task::factory()->make()->toArray();
-        $data = Arr::only($factoryData, ['name', 'status_id', 'labels']);
-        $response = $this->actingAs($this->user)->post(route('tasks.store'), $data);
+        $data = Arr::only($factoryData, ['name', 'status_id']);
+
+        $labels = $this->labels->pluck('id')->toArray();
+        $dataWithLabels = array_merge($data, ['labels' => $labels]);
+
+        $response = $this->actingAs($this->user)->post(route('tasks.store'), $dataWithLabels);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-
         $this->assertDatabaseHas('tasks', $data);
+
+        $newTask = Task::where($data)->first();
+        $this->assertEquals($newTask->labels->pluck('id')->toArray(), $labels);
     }
 
     public function testUpdate(): void
     {
         $factoryData = $this->task->toArray();
-        $data = Arr::only($factoryData, ['name', 'status_id', 'labels']);
-        $response = $this->actingAs($this->user)->patch(route('tasks.update', $this->task), $data);
+        $data = Arr::only($factoryData, ['name', 'status_id']);
+
+        $labels = $this->labels->pluck('id')->toArray();
+        $dataWithLabels = array_merge($data, ['labels' => $labels]);
+
+        $response = $this->actingAs($this->user)->patch(route('tasks.update', $this->task), $dataWithLabels);
+
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
         $this->assertDatabaseHas('tasks', $data);
+        $this->assertEquals($this->task->labels->pluck('id')->toArray(), $labels);
     }
 
     public function testDestroy(): void
