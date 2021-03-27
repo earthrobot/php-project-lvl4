@@ -63,6 +63,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', $data);
 
         $newTask = Task::where($data)->first();
+        $this->assertNotNull($newTask);
         $this->assertEquals($newTask->labels()->pluck('label_id')->toArray(), $labels);
     }
 
