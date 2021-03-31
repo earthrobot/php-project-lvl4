@@ -11,6 +11,14 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    require('select2');
+
+    $(document).ready(function () {
+        $('.select-multiple').select2({
+            width: '100%'
+        });
+    });
+
 } catch (e) {}
 
 /**
