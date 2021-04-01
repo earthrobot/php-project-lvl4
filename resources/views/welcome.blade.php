@@ -3,11 +3,10 @@
 @section('content')
 <div class="container">
         <div class="jumbotron">
-            <h1 class="display-4">{{ config('app.name', 'Менеджер задач') }}</h1>
-            <p class="lead">{{ __('messages.app_description') }}</p>
-            <p>{{ __('messages.hexlet_says_hi') }}</p>
+            <h1 class="display-4">{{ __('messages.hexlet_says_hi') }}</h1>
+            <p class="lead">Практические курсы по программированию</p>
             <hr class="my-4">
-            <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io/programs/php/projects/57" role="button">{{ __('messages.more') }}</a>
+            <a class="btn btn-primary btn-lg" href="https://hexlet.io" role="button">{{ __('messages.more') }}</a>
         </div>
     </div>
 @endsection
