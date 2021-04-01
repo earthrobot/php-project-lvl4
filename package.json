@@ -1,29 +1,46 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "devDependencies": {
-        "axios": "^0.21",
-        "bootstrap": "^4.0.0",
-        "jquery": "^3.2",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "popper.js": "^1.12",
-        "postcss": "^8.1.14",
-        "resolve-url-loader": "^3.1.2",
-        "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
-    },
-    "dependencies": {
-        "@rails/ujs": "^6.1.3",
-        "chokidar": "^3.5.1",
-        "select2": "^4.1.0-rc.0"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+  },
+  "devDependencies": {
+    "axios": "^0.21",
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.2",
+    "laravel-mix": "^6.0.6",
+    "lodash": "^4.17.19",
+    "popper.js": "^1.12",
+    "postcss": "^8.1.14",
+    "resolve-url-loader": "^3.1.2",
+    "sass": "^1.15.2",
+    "sass-loader": "^8.0.0"
+  },
+  "dependencies": {
+    "@rails/ujs": "^6.1.3",
+    "chokidar": "^3.5.1",
+    "select2": "^4.1.0-rc.0"
+  },
+  "name": "task-manager",
+  "description": "[![Actions Status](https://github.com/earthrobot/php-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/earthrobot/php-project-lvl4/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/a65eb3a26e7322f6e9e0/maintainability)](https://codeclimate.com/github/earthrobot/php-project-lvl4/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/a65eb3a26e7322f6e9e0/test_coverage)](https://codeclimate.com/github/earthrobot/php-project-lvl4/test_coverage) [![Actions Status](https://github.com/earthrobot/php-project-lvl4/workflows/workflow/badge.svg)](https://github.com/earthrobot/php-project-lvl4/actions)",
+  "version": "1.0.0",
+  "main": "webpack.mix.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/earthrobot/php-project-lvl4.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/earthrobot/php-project-lvl4/issues"
+  },
+  "homepage": "https://github.com/earthrobot/php-project-lvl4#readme"
 }
