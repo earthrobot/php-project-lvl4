@@ -20,14 +20,11 @@
         "laravelcollective/html": "^6.2",
         "phpunit/phpunit": "^9.5",
         "rollbar/rollbar-laravel": "^7.0",
-        "spatie/laravel-query-builder": "^3.3",
         "squizlabs/php_codesniffer": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/dusk": "^6.13",
-        "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0"
     },
