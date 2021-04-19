@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Label;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LabelController extends Controller
 {
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Label::class, 'label');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +37,6 @@ class LabelController extends Controller
      */
     public function create()
     {
-        $this->authorize('crud');
         $label = new Label();
         return response()
             ->view('labels.create', compact('label'));
@@ -47,6 +57,7 @@ class LabelController extends Controller
 
         $label = new Label();
         $label->fill($data);
+        $label->createdBy()->associate(Auth::user());
         $label->save();
 
         flash(__('messages.label_store_success'))->success();
@@ -63,8 +74,6 @@ class LabelController extends Controller
      */
     public function show(Label $label)
     {
-        $this->authorize('admin');
-
         return response()
             ->view('labels.show', compact('label'));
     }
@@ -77,8 +86,6 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
-        $this->authorize('crud');
-
         return response()
             ->view('labels.edit', compact('label'));
     }
@@ -114,7 +121,6 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        $this->authorize('crud');
         try {
             if ($label->exists()) {
                 $label->delete();

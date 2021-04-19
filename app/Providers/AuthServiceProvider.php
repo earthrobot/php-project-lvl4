@@ -6,6 +6,9 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use App\Models\Task;
+use App\Policies\TaskPolicy;
+use App\Policies\TaskStatusPolicy;
+use App\Policies\LabelPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,7 +18,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Task::class => TaskPolicy::class,
+        TaskStatus::class => TaskStatusPolicy::class,
+        Label::class => LabelPolicy::class,
     ];
 
     /**
@@ -26,17 +31,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define('admin', function (User $user): bool {
-            return false;
-        });
-
-        Gate::define('crud', function (User $user): bool {
-            return true;
-        });
-
-        Gate::define('delete-task', function (User $user, Task $task): bool {
-            return $task->createdBy()->is($user);
-        });
     }
 }

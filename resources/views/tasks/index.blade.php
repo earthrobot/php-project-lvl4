@@ -39,14 +39,14 @@
                 <td>{{ $task->createdBy->name }}</td>
                 <td>{{ $task->assignedTo->name ?? '' }}</td>
                 <td>{{ $task->toArray()['created_at'] }}</td>
-                @auth
+                @can('update', $task)
                 <td>
-                    @can('delete-task', $task)
+                    @can('delete', $task)
                     <a class="text-danger" href="{{ route('tasks.destroy', $task), false }}" data-confirm="{{ __('messages.confirm_action') }}" data-method="delete" rel="nofollow">{{ __('messages.delete_link') }}</a>
                     @endcan
                     <a href="{{ route('tasks.edit', $task) }}">{{ __('messages.edit_link') }}</a>
                 </td>
-                @endauth
+                @endcan
             </tr>
         @empty
             <tr><td>{{ __('messages.task_table_no_data') }}</td></tr>

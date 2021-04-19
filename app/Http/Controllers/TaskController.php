@@ -15,6 +15,16 @@ use Illuminate\Support\Arr;
 class TaskController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -49,7 +59,6 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $this->authorize('crud');
         $task = new Task();
         $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
@@ -123,7 +132,6 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $this->authorize('crud');
         $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
             return [$item['id'] => $item['name']];
         })->toArray();
@@ -182,7 +190,6 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $this->authorize('delete-task', $task);
         if ($task->exists()) {
             $task->delete();
             flash(__('messages.task_delete_success'))->success();

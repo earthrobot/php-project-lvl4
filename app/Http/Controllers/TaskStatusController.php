@@ -4,12 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskStatusController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class, 'taskStatus');
+    }
+
+    /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -26,7 +38,6 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        $this->authorize('crud');
         $taskStatus = new TaskStatus();
 
         return response()
@@ -47,6 +58,7 @@ class TaskStatusController extends Controller
 
         $taskStatus = new TaskStatus();
         $taskStatus->fill($data);
+        $taskStatus->createdBy()->associate(Auth::user());
         $taskStatus->save();
 
         flash(__('messages.status_store_success'))->success();
@@ -62,8 +74,7 @@ class TaskStatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(TaskStatus $taskStatus)
-    {
-        $this->authorize('admin');
+    { 
         return response()
             ->view('task_statuses.show', compact('taskStatus'));
     }
@@ -75,8 +86,7 @@ class TaskStatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(TaskStatus $taskStatus)
-    {
-        $this->authorize('crud');
+    {        
         return response()
             ->view('task_statuses.edit', compact('taskStatus'));
     }
@@ -111,7 +121,6 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        $this->authorize('crud');
         try {
             if ($taskStatus->exists()) {
                 $taskStatus->delete();

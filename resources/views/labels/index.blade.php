@@ -3,9 +3,9 @@
 @section('content')
 <h1 class="mb-5">{{ __('messages.labels_index_page_title') }}</h1>
 
-@auth
+@can('create', App\Models\Label::class)
 <a href="{{ route('labels.create') }}" class="btn btn-primary">{{ __('messages.create_label') }}</a>
-@endauth
+@endcan
 <table class="table mt-2">
     <thead>
         <tr>
@@ -27,8 +27,12 @@
                 <td>{{ $label->toArray()['created_at'] }}</td>
                 @auth
                 <td>
+                    @can('delete', $label)
                     <a class="text-danger" href="{{ route('labels.destroy', $label), false }}" data-confirm="{{ __('messages.confirm_action') }}" data-method="delete" rel="nofollow">{{ __('messages.delete_link') }}</a>
+                    @endcan
+                    @can('update', $label)
                     <a href="{{ route('labels.edit', $label) }}">{{ __('messages.edit_link') }}</a>
+                    @endcan
                 </td>
                 @endauth
             </tr>

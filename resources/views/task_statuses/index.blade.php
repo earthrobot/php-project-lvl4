@@ -3,9 +3,9 @@
 @section('content')
 <h1 class="mb-5">{{ __('messages.statuses_index_page_title') }}</h1>
 
-@auth
+@can('create', App\Models\TaskStatus::class)
 <a href="{{ route('task_statuses.create') }}" class="btn btn-primary">{{ __('messages.create_status') }}</a>
-@endauth
+@endcan
 <table class="table mt-2">
     <thead>
         <tr>
@@ -25,8 +25,12 @@
                 <td>{{ $taskStatus->toArray()['created_at'] }}</td>
                 @auth
                 <td>
+                    @can('delete', $taskStatus)
                     <a class="text-danger" href="{{ route('task_statuses.destroy', $taskStatus), false }}" data-confirm="{{ __('messages.confirm_action') }}" data-method="delete" rel="nofollow">{{ __('messages.delete_link') }}</a>
+                    @endcan
+                    @can('update', $taskStatus)
                     <a href="{{ route('task_statuses.edit', $taskStatus) }}">{{ __('messages.edit_link') }}</a>
+                    @endcan
                 </td>
                 @endauth
             </tr>
