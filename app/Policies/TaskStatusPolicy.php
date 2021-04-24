@@ -30,7 +30,7 @@ class TaskStatusPolicy
      */
     public function view(?User $user, TaskStatus $taskStatus)
     {
-        return false;
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ class TaskStatusPolicy
      */
     public function delete(User $user, TaskStatus $taskStatus)
     {
-        return $taskStatus->createdBy()->is($user);
+        return $user->id == $taskStatus->created_by_id;
     }
 
 }

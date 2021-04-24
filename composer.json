@@ -21,6 +21,7 @@
         "laravelcollective/html": "^6.2",
         "phpunit/phpunit": "^9.5",
         "rollbar/rollbar-laravel": "^7.0",
+        "spatie/laravel-query-builder": "^3.3",
         "squizlabs/php_codesniffer": "*"
     },
     "require-dev": {
