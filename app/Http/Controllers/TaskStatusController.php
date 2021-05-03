@@ -15,7 +15,7 @@ class TaskStatusController extends Controller
      */
     public function __construct()
     {
-        $this->authorizeResource(TaskStatus::class, 'taskStatus');
+        $this->authorizeResource(TaskStatus::class);
     }
 
     /**
@@ -74,7 +74,7 @@ class TaskStatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(TaskStatus $taskStatus)
-    { 
+    {
         return response()
             ->view('task_statuses.show', compact('taskStatus'));
     }
@@ -86,7 +86,7 @@ class TaskStatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(TaskStatus $taskStatus)
-    {        
+    {
         return response()
             ->view('task_statuses.edit', compact('taskStatus'));
     }

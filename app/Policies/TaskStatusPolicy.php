@@ -67,5 +67,4 @@ class TaskStatusPolicy
     {
         return $user->id == $taskStatus->created_by_id;
     }
-
 }
