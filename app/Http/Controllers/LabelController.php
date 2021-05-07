@@ -57,7 +57,9 @@ class LabelController extends Controller
 
         $label = new Label();
         $label->fill($data);
-        $label->created_by_id = Auth::user()->id;
+        if (Auth::check()) {
+            $label->created_by_id = Auth::user()->id;
+        }
         $label->save();
 
         flash(__('messages.label_store_success'))->success();

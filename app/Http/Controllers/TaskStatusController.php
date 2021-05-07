@@ -21,7 +21,6 @@ class TaskStatusController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -58,7 +57,9 @@ class TaskStatusController extends Controller
 
         $taskStatus = new TaskStatus();
         $taskStatus->fill($data);
-        $taskStatus->created_by_id = Auth::user()->id;
+        if (Auth::check()) {
+            $taskStatus->created_by_id = Auth::user()->id;
+        }
         $taskStatus->save();
 
         flash(__('messages.status_store_success'))->success();
