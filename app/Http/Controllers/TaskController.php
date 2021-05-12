@@ -31,6 +31,8 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
+        //dd(Auth::user()->assigned_tasks()->get());
+        dd(Task::find(1)->status()->get());
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
                 AllowedFilter::exact('status_id'),
