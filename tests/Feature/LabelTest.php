@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Arr;
 use App\Models\User;
 use App\Models\Label;
+use Illuminate\Support\Facades\Auth;
 
 class LabelTest extends TestCase
 {
@@ -16,8 +17,11 @@ class LabelTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        $this->label = Label::factory()->create();
+        $user = User::factory()
+            ->has(Label::factory()->count(3), 'labels')
+            ->create();
+        $this->user = Auth::loginUsingId($user->id);
+        $this->label = $this->user->labels()->first();
     }
 
     public function testIndex(): void

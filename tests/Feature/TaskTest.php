@@ -9,23 +9,24 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\Label;
+use Illuminate\Support\Facades\Auth;
 
 class TaskTest extends TestCase
 {
     private User $user;
-    private Task $task;
-    private Collection $labels;
+    // private Task $task;
+    // private Collection $labels;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->seed();
 
-        $this->user = User::factory()->create();
-        $this->task = Task::factory()
-            ->for($this->user, 'createdBy')
+        $user = User::factory()
+            ->has(Task::factory()->count(3), 'tasks')
             ->create();
-        $this->labels = Label::factory(3)->create();
+        $this->user = Auth::loginUsingId($user->id);
+        $this->task = $this->user->tasks()->first();
     }
 
     public function testIndex(): void

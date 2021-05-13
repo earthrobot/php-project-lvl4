@@ -48,7 +48,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Task', 'created_by_id');
     }
 
-    public function assigned_tasks(): HasMany
+    public function assignedTasks(): HasMany
     {
         return $this->hasMany('App\Models\Task', 'assigned_to_id');
     }
@@ -58,9 +58,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Label', 'created_by_id');
     }
 
-    public function task_statuses(): HasMany
+    public function taskStatuses(): HasMany
     {
         return $this->hasMany('App\Models\TaskStatus', 'created_by_id');
     }
-
 }

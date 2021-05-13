@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Arr;
 use App\Models\TaskStatus;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TaskStatusTest extends TestCase
 {
@@ -16,8 +17,11 @@ class TaskStatusTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
-        $this->taskStatus = TaskStatus::factory()->create();
+        $user = User::factory()
+            ->has(TaskStatus::factory()->count(3), 'taskStatuses')
+            ->create();
+        $this->user = Auth::loginUsingId($user->id);
+        $this->taskStatus = $this->user->taskStatuses()->first();
     }
 
     public function testIndex(): void

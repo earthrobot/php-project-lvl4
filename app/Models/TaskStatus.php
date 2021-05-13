@@ -26,5 +26,4 @@ class TaskStatus extends Model
     {
         return $this->hasMany('App\Models\Task', 'status_id');
     }
-
 }
