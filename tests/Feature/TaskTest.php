@@ -10,9 +10,12 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\Label;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TaskTest extends TestCase
 {
+    use RefreshDatabase;
+
     private User $user;
     // private Task $task;
     // private Collection $labels;
@@ -20,13 +23,16 @@ class TaskTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
+        //$this->seed();
 
-        $user = User::factory()
-            ->has(Task::factory()->count(3), 'tasks')
-            ->create();
-        $this->user = Auth::loginUsingId($user->id);
-        $this->task = $this->user->tasks()->first();
+        // $user = User::factory()
+        //     ->has(Task::factory()->count(3), 'tasks')
+        //     ->create();
+        // $this->user = Auth::loginUsingId($user->id);
+        $this->user = User::factory()->create();
+        Task::factory()->count(2)->create();
+
+        //$this->task = $this->user->tasks()->first();
     }
 
     public function testIndex(): void
@@ -44,8 +50,9 @@ class TaskTest extends TestCase
 
     public function testEdit(): void
     {
+        $task = Task::factory()->create();
         $response = $this->actingAs($this->user)
-            ->get(route('tasks.edit', [$this->task]));
+            ->get(route('tasks.edit', [$task]));
         $response->assertOk();
     }
 
@@ -54,7 +61,7 @@ class TaskTest extends TestCase
         $factoryData = Task::factory()->make()->toArray();
         $data = Arr::only($factoryData, ['name', 'status_id']);
 
-        $labels = $this->labels->pluck('id')->toArray();
+        $labels = [Label::factory()->create()->id];
         $dataWithLabels = array_merge($data, ['labels' => $labels]);
 
         $response = $this->actingAs($this->user)->post(route('tasks.store'), $dataWithLabels);
@@ -70,34 +77,42 @@ class TaskTest extends TestCase
 
     public function testUpdate(): void
     {
-        $factoryData = $this->task->toArray();
-        $data = Arr::only($factoryData, ['name', 'status_id']);
+        $task = Task::factory()->create();
+        $factoryData = Task::factory()->make()->toArray();
+        $data = \Arr::only(
+            $factoryData,
+            ['name', 'description', 'status_id']
+        );
+        $labels = [Label::factory()->create()->id];
 
-        $labels = $this->labels->pluck('id')->toArray();
         $dataWithLabels = array_merge($data, ['labels' => $labels]);
 
-        $response = $this->actingAs($this->user)->patch(route('tasks.update', $this->task), $dataWithLabels);
+        $response = $this->actingAs($this->user)->patch(route('tasks.update', $task), $dataWithLabels);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
         $this->assertDatabaseHas('tasks', $data);
-        $this->assertEquals($this->task->labels()->pluck('label_id')->toArray(), $labels);
+        $this->assertEquals($task->labels()->pluck('label_id')->toArray(), $labels);
     }
 
     public function testDestroy(): void
     {
+        $task = Task::factory()
+            ->for($this->user)
+            ->create();
         $response = $this->actingAs($this->user)
-            ->delete(route('tasks.destroy', [$this->task]));
+            ->delete(route('tasks.destroy', [$task]));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseMissing('tasks', ['id' => $this->task->id]);
+        $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
     }
 
     public function testDestroyFailsIfUserIsNotCreator(): void
     {
-        $response = $this->delete(route('tasks.destroy', [$this->task]));
+        $task = Task::factory()->create();
+        $response = $this->delete(route('tasks.destroy', [$task]));
         $response->assertForbidden();
     }
 }

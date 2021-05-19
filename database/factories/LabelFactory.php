@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Label;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 class LabelFactory extends Factory
 {
@@ -24,6 +25,7 @@ class LabelFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
+            'created_by_id' => User::factory()->create()->id
         ];
     }
 }

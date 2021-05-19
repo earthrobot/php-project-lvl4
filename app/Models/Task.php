@@ -14,7 +14,7 @@ class Task extends Model
 
     protected $fillable = ['name', 'description', 'status_id', 'assigned_to_id'];
 
-    public function createdBy(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo('App\Models\User', 'created_by_id');
     }

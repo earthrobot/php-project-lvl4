@@ -95,7 +95,7 @@ class TaskController extends Controller
         $task = new Task();
         $task->fill($data);
 
-        $task->createdBy()->associate(Auth::user());
+        $task->user()->associate(Auth::user());
 
         if (array_key_exists('assigned_to_id', $data) && $data['assigned_to_id'] != '') {
             $task->assignedTo()->associate($data['assigned_to_id']);

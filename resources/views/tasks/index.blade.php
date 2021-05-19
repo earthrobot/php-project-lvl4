@@ -36,7 +36,7 @@
                 <td>{{ $task->id }}</td>
                 <td>{{ $task->status->name }}</td>
                 <td><a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a></td>
-                <td>{{ $task->createdBy->name }}</td>
+                <td>{{ $task->user->name }}</td>
                 <td>{{ $task->assignedTo->name ?? '' }}</td>
                 <td>{{ $task->toArray()['created_at'] }}</td>
                 @can('update', $task)
