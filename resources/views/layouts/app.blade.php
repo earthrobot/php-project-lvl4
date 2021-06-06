@@ -48,7 +48,7 @@
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a>
                                 </li>
                             @endif
-                            
+
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('messages.register') }}</a>
@@ -61,15 +61,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('messages.logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" data-method="POST" rel="nofollow">{{ __('messages.logout') }}</a>
                                 </div>
                             </li>
                         @endguest
@@ -77,18 +69,12 @@
                 </div>
             </div>
         </nav>
-        
+
         <main class="container py-4">
             @include('flash::message')
-            
+
             @yield('content')
         </main>
     </div>
-
-    <script>
-    $(document).ready(function() {
-        $('.form-control').select2();
-    });
-    </script>
 </body>
 </html>

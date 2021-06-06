@@ -51,7 +51,9 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
+        $data = $request->all();
+
+        $this->validate($request, [
             'name' => 'required|unique:task_statuses'
         ]);
 
@@ -101,7 +103,9 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        $data = $this->validate($request, [
+        $data = $request->all();
+
+        $this->validate($request, [
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
 
@@ -122,14 +126,8 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        try {
-            if ($taskStatus->exists()) {
-                $taskStatus->delete();
-                flash(__('messages.status_delete_success'))->success();
-            }
-        } catch (\Exception $e) {
-            flash(__('messages.status_update_fail'))->error();
-        }
+        $taskStatus->delete();
+        flash(__('messages.status_delete_success'))->success();
 
         return redirect()
             ->route('task_statuses.index');

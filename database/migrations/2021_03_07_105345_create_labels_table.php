@@ -17,6 +17,8 @@ class CreateLabelsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
+            $table->bigInteger('created_by_id')->nullable();
+            $table->foreign('created_by_id')->references('id')->on('users');
             $table->timestamps();
         });
 
@@ -28,8 +30,8 @@ class CreateLabelsTable extends Migration
 
             $table->unique(['task_id', 'label_id']);
 
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->foreign('label_id')->references('id')->on('labels')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('tasks');
+            $table->foreign('label_id')->references('id')->on('labels');
         });
     }
 

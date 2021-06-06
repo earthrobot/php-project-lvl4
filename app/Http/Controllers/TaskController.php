@@ -31,8 +31,6 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        //dd(Auth::user()->assigned_tasks()->get());
-        //dd(Task::find(1)->status()->get());
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
                 AllowedFilter::exact('status_id'),
@@ -41,17 +39,13 @@ class TaskController extends Controller
             ])
             ->get();
 
-        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
-        $users = User::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
+        $users = User::all()->pluck('name', 'id');
 
         $filter = $request->get('filter');
 
         return response()
-            ->view('tasks.index', compact('tasks', 'task_statuses', 'users', 'filter'));
+            ->view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
     }
 
     /**
@@ -62,18 +56,12 @@ class TaskController extends Controller
     public function create()
     {
         $task = new Task();
-        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
-        $users = User::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
-        $labels = Label::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
+        $users = User::all()->pluck('name', 'id');
+        $labels = Label::all()->pluck('name', 'id');
 
         return response()
-            ->view('tasks.create', compact('task', 'task_statuses', 'users', 'labels'));
+            ->view('tasks.create', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
     /**
@@ -84,12 +72,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
+        $data = $request->all();
+
+        $this->validate($request, [
             'name' => 'required|max:255',
-            'description' => '',
-            'status_id' => 'required',
-            'assigned_to_id' => '',
-            'labels' => ''
+            'status_id' => 'required'
         ]);
 
         $task = new Task();
@@ -134,18 +121,12 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $task_statuses = TaskStatus::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
-        $users = User::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
-        $labels = Label::all()->mapWithKeys(function ($item): array {
-            return [$item['id'] => $item['name']];
-        })->toArray();
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
+        $users = User::all()->pluck('name', 'id');
+        $labels = Label::all()->pluck('name', 'id');
 
         return response()
-            ->view('tasks.edit', compact('task', 'task_statuses', 'users', 'labels'));
+            ->view('tasks.edit', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
     /**
@@ -157,12 +138,11 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $data = $this->validate($request, [
+        $data = $request->all();
+
+        $this->validate($request, [
             'name' => 'required|max:255',
-            'description' => '',
-            'status_id' => 'required',
-            'assigned_to_id' => '',
-            'labels' => ''
+            'status_id' => 'required'
         ]);
 
         $task->fill($data);
@@ -192,10 +172,9 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        if ($task->exists()) {
-            $task->delete();
-            flash(__('messages.task_delete_success'))->success();
-        }
+        $task->delete();
+        flash(__('messages.task_delete_success'))->success();
+
         return redirect()
             ->route('tasks.index');
     }

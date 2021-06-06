@@ -65,6 +65,6 @@ class TaskStatusPolicy
      */
     public function delete(User $user, TaskStatus $taskStatus)
     {
-        return $user->id == $taskStatus->created_by_id;
+        return true;
     }
 }

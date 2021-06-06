@@ -8,8 +8,7 @@ setup:
 	php artisan key:gen --ansi
 	php artisan migrate
 	php artisan db:seed
-	npm install
-	npm run dev
+	npm ci
 
 watch:
 	npm run watch

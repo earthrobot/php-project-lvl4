@@ -50,16 +50,17 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:labels',
-            'description' => ''
+        $data = $request->all();
+
+        $this->validate($request, [
+            'name' => 'required|unique:labels'
         ]);
 
         $label = new Label();
         $label->fill($data);
-        if (Auth::check()) {
-            $label->created_by_id = Auth::user()->id;
-        }
+
+        $label->created_by_id = Auth::user()->id;
+
         $label->save();
 
         flash(__('messages.label_store_success'))->success();
@@ -101,9 +102,10 @@ class LabelController extends Controller
      */
     public function update(Request $request, Label $label)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:labels,name,' . $label->id,
-            'description' => ''
+        $data = $request->all();
+
+        $this->validate($request, [
+            'name' => 'required|unique:labels,name,' . $label->id
         ]);
 
         $label->fill($data);
@@ -124,14 +126,13 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        try {
-            if ($label->exists()) {
-                $label->delete();
-                flash(__('messages.label_delete_success'))->success();
-            }
-        } catch (\Exception $e) {
-            flash(__('messages.label_update_fail'))->error();
+        if ($label->tasks()->exists()) {
+            flash(__('messages.label_delete_fail'))->error();
+            return back();
         }
+
+        $label->delete();
+        flash(__('messages.label_delete_success'))->success();
 
         return redirect()
             ->route('labels.index');
