@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Task extends Model
 {
@@ -33,14 +32,4 @@ class Task extends Model
     {
         return $this->belongsToMany('App\Models\Label', 'label_task', 'task_id', 'label_id');
     }
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-
-    protected $casts = [
-        'created_at' => 'datetime:d.m.Y',
-    ];
 }

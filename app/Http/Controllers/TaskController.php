@@ -84,16 +84,15 @@ class TaskController extends Controller
 
         $task->user()->associate(Auth::user());
 
-        if (array_key_exists('assigned_to_id', $data) && $data['assigned_to_id'] != '') {
+        if (isset($data['assigned_to_id'])) {
             $task->assignedTo()->associate($data['assigned_to_id']);
         }
 
         $task->save();
 
-        if (array_key_exists('labels', $data)) {
-            $labels = array_filter($data['labels']);
-            $task->labels()->sync(Arr::wrap($labels));
-        }
+        $labels = collect($request->input('labels'))->filter(fn($label) => $label !== null);
+        $task->labels()->sync($labels);
+
 
         flash(__('messages.task_store_success'))->success();
 
@@ -147,16 +146,14 @@ class TaskController extends Controller
 
         $task->fill($data);
 
-        if (array_key_exists('assigned_to_id', $data) && $data['assigned_to_id'] != '') {
+        if (isset($data['assigned_to_id'])) {
             $task->assignedTo()->associate($data['assigned_to_id']);
         }
 
-        if (array_key_exists('labels', $data)) {
-            $labels = array_filter($data['labels']);
-            $task->labels()->sync(Arr::wrap($labels));
-        }
-
         $task->save();
+
+        $labels = collect($request->input('labels'))->filter(fn($label) => $label !== null);
+        $task->labels()->sync($labels);
 
         flash(__('messages.task_update_success'))->success();
 
