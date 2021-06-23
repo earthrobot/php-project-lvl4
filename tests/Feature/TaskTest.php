@@ -23,16 +23,8 @@ class TaskTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        //$this->seed();
-
-        // $user = User::factory()
-        //     ->has(Task::factory()->count(3), 'tasks')
-        //     ->create();
-        // $this->user = Auth::loginUsingId($user->id);
         $this->user = User::factory()->create();
         Task::factory()->count(2)->create();
-
-        //$this->task = $this->user->tasks()->first();
     }
 
     public function testIndex(): void
