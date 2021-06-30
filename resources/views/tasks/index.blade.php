@@ -6,10 +6,10 @@
 <div class="d-flex">
     <div>
         {{ Form::model($tasks, ['url' => route('tasks.index'), 'method' => 'GET', 'class' => 'form-inline']) }}
-            {{ Form::select('filter[status_id]', $taskStatuses, $filter['status_id'] ?? null, ['placeholder' => 'Статус','class' => 'form-control mr-2']) }}
-            {{ Form::select('filter[created_by_id]', $users, $filter['created_by_id'] ?? null, ['placeholder' => 'Автор','class' => 'form-control mr-2']) }}
-            {{ Form::select('filter[assigned_to_id]', $users, $filter['assigned_to_id'] ?? null, ['placeholder' => 'Исполнитель','class' => 'form-control mr-2']) }}
-            {{ Form::submit(__('Применить'), ['class' => 'btn btn-outline-primary mr-2']) }}
+            {{ Form::select('filter[status_id]', $taskStatuses, $filter['status_id'] ?? null, ['placeholder' => '{{ __('messages.status_label') }}','class' => 'form-control mr-2']) }}
+            {{ Form::select('filter[created_by_id]', $users, $filter['created_by_id'] ?? null, ['placeholder' => '{{ __('messages.author_label') }}','class' => 'form-control mr-2']) }}
+            {{ Form::select('filter[assigned_to_id]', $users, $filter['assigned_to_id'] ?? null, ['placeholder' => '{{ __('messages.executor_label') }}','class' => 'form-control mr-2']) }}
+            {{ Form::submit(__('{{ __('messages.executor_label') }}'), ['class' => 'btn btn-outline-primary mr-2']) }}
         {{ Form::close() }}
     </div>
     @auth

@@ -32,8 +32,7 @@ class LabelTest extends TestCase
 
     public function testCreate(): void
     {
-        $response = $this->actingAs($this->user)
-            ->get(route('labels.create'));
+        $response = $this->get(route('labels.create'));
         $response->assertOk();
     }
 
@@ -59,7 +58,7 @@ class LabelTest extends TestCase
     {
         $factoryData = $this->label->toArray();
         $data = Arr::only($factoryData, ['name']);
-        $response = $this->patch(route('labels.update', $this->label), $data);
+        $response = $this->patch(route('labels.update', [$this->label]), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 

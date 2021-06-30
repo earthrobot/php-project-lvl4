@@ -4,12 +4,10 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Arr;
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\Label;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TaskTest extends TestCase
@@ -17,8 +15,6 @@ class TaskTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
-    // private Task $task;
-    // private Collection $labels;
 
     protected function setUp(): void
     {
@@ -51,40 +47,40 @@ class TaskTest extends TestCase
     public function testStore(): void
     {
         $factoryData = Task::factory()->make()->toArray();
-        $data = Arr::only($factoryData, ['name', 'status_id']);
+        $dataForTask = Arr::only($factoryData, ['name', 'status_id']);
 
         $labels = [Label::factory()->create()->id];
-        $dataWithLabels = array_merge($data, ['labels' => $labels]);
+        $dataForTaskWithLabels = array_merge($dataForTask, ['labels' => $labels]);
 
-        $response = $this->actingAs($this->user)->post(route('tasks.store'), $dataWithLabels);
+        $response = $this->actingAs($this->user)->post(route('tasks.store'), $dataForTaskWithLabels);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-        $this->assertDatabaseHas('tasks', $data);
+        $this->assertDatabaseHas('tasks', $dataForTask);
 
-        $newTask = Task::where($data)->first();
-        $this->assertNotNull($newTask);
-        $this->assertEquals($newTask->labels()->pluck('label_id')->toArray(), $labels);
+        $task = Task::where($dataForTask)->first();
+        $this->assertNotNull($task);
+        $this->assertEquals($task->labels()->pluck('label_id')->toArray(), $labels);
     }
 
     public function testUpdate(): void
     {
         $task = Task::factory()->create();
         $factoryData = Task::factory()->make()->toArray();
-        $data = \Arr::only(
+        $dataForTask = \Arr::only(
             $factoryData,
             ['name', 'description', 'status_id']
         );
         $labels = [Label::factory()->create()->id];
 
-        $dataWithLabels = array_merge($data, ['labels' => $labels]);
+        $dataForTaskWithLabels = array_merge($dataForTask, ['labels' => $labels]);
 
-        $response = $this->actingAs($this->user)->patch(route('tasks.update', $task), $dataWithLabels);
+        $response = $this->actingAs($this->user)->patch(route('tasks.update', $task), $dataForTaskWithLabels);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('tasks', $data);
+        $this->assertDatabaseHas('tasks', $dataForTask);
         $this->assertEquals($task->labels()->pluck('label_id')->toArray(), $labels);
     }
 

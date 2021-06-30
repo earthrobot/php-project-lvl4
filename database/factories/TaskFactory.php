@@ -24,11 +24,6 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            // 'name' => $this->faker->word(),
-            // 'description' => $this->faker->paragraph(),
-            // 'status_id' => 1,
-            // 'created_by_id' => 1,
-            // 'assigned_to_id' => 1,
             'name' => $this->faker->name,
             'status_id' => TaskStatus::factory()->create()->id,
             'created_by_id' => User::factory()->create()->id,
