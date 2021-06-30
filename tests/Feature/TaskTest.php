@@ -15,11 +15,13 @@ class TaskTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+    private Task $task;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->user = User::factory()->create();
+        $this->task = Task::factory()->create();
         Task::factory()->count(2)->create();
     }
 
@@ -65,7 +67,6 @@ class TaskTest extends TestCase
 
     public function testUpdate(): void
     {
-        $task = Task::factory()->create();
         $factoryData = Task::factory()->make()->toArray();
         $dataForTask = \Arr::only(
             $factoryData,
@@ -75,13 +76,13 @@ class TaskTest extends TestCase
 
         $dataForTaskWithLabels = array_merge($dataForTask, ['labels' => $labels]);
 
-        $response = $this->actingAs($this->user)->patch(route('tasks.update', $task), $dataForTaskWithLabels);
+        $response = $this->actingAs($this->user)->patch(route('tasks.update', $this->task), $dataForTaskWithLabels);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
         $this->assertDatabaseHas('tasks', $dataForTask);
-        $this->assertEquals($task->labels()->pluck('label_id')->toArray(), $labels);
+        $this->assertEquals($this->task->labels()->pluck('label_id')->toArray(), $labels);
     }
 
     public function testDestroy(): void
