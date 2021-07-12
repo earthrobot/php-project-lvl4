@@ -23,7 +23,7 @@ class LabelFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->unique()->word(),
             'description' => $this->faker->sentence(),
             'created_by_id' => User::factory()->create()->id
         ];

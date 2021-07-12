@@ -109,7 +109,7 @@ class LabelController extends Controller
         ]);
 
         $label->fill($data);
-        $label->created_by_id = Auth::user()->id;
+        $label->createdBy()->associate(Auth::id());
         $label->save();
 
         flash(__('messages.label_update_success'))->success();

@@ -21,8 +21,7 @@ class TaskTest extends TestCase
     {
         parent::setUp();
         $this->user = User::factory()->create();
-        $this->task = Task::factory()->create();
-        Task::factory()->count(2)->create();
+        $this->task = Task::factory()->hasLabels(2)->create();
     }
 
     public function testIndex(): void
@@ -40,49 +39,38 @@ class TaskTest extends TestCase
 
     public function testEdit(): void
     {
-        $task = Task::factory()->create();
         $response = $this->actingAs($this->user)
-            ->get(route('tasks.edit', [$task]));
+            ->get(route('tasks.edit', [$this->task]));
         $response->assertOk();
     }
 
     public function testStore(): void
     {
-        $factoryData = Task::factory()->make()->toArray();
-        $dataForTask = Arr::only($factoryData, ['name', 'status_id']);
+        $taskDataForStore = Task::factory()
+            ->for($this->user)
+            ->make()
+            ->toArray();
 
-        $labels = [Label::factory()->create()->id];
-        $dataForTaskWithLabels = array_merge($dataForTask, ['labels' => $labels]);
-
-        $response = $this->actingAs($this->user)->post(route('tasks.store'), $dataForTaskWithLabels);
+        $response = $this->actingAs($this->user)->post(route('tasks.store'), $taskDataForStore);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-        $this->assertDatabaseHas('tasks', $dataForTask);
-
-        $task = Task::where($dataForTask)->first();
-        $this->assertNotNull($task);
-        $this->assertEquals($task->labels()->pluck('label_id')->toArray(), $labels);
+        $this->assertDatabaseHas('tasks', $taskDataForStore);
     }
 
     public function testUpdate(): void
     {
-        $factoryData = Task::factory()->make()->toArray();
-        $dataForTask = \Arr::only(
-            $factoryData,
-            ['name', 'description', 'status_id']
+        $taskData = $this->task->toArray();
+        $taskDataForChanging = \Arr::only(
+            $taskData,
+            ['name', 'status_id', 'assigned_to_id', 'description']
         );
-        $labels = [Label::factory()->create()->id];
 
-        $dataForTaskWithLabels = array_merge($dataForTask, ['labels' => $labels]);
-
-        $response = $this->actingAs($this->user)->patch(route('tasks.update', $this->task), $dataForTaskWithLabels);
+        $response = $this->actingAs($this->user)->patch(route('tasks.update', $this->task), $taskDataForChanging);
 
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-
-        $this->assertDatabaseHas('tasks', $dataForTask);
-        $this->assertEquals($this->task->labels()->pluck('label_id')->toArray(), $labels);
+        $this->assertDatabaseHas('tasks', $taskDataForChanging);
     }
 
     public function testDestroy(): void

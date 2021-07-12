@@ -23,7 +23,7 @@ class TaskStatusFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->unique()->word(),
             'created_by_id' => User::factory()->create()->id
         ];
     }

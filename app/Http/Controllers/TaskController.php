@@ -71,27 +71,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-
-        $this->validate($request, [
+        $data = $this->validate($request, [
             'name' => 'required|max:255',
-            'status_id' => 'required'
+            'status_id' => 'required',
+            'labels' => 'nullable|array',
+            'assigned_to_id' => 'nullable|integer',
+            'description' => 'nullable|string'
         ]);
 
         $task = new Task();
         $task->fill($data);
-
         $task->user()->associate(Auth::user());
-
-        if (isset($data['assigned_to_id'])) {
-            $task->assignedTo()->associate($data['assigned_to_id']);
-        }
+        $task->assignedTo()->associate($request->input('assigned_to_id'));
 
         $task->save();
 
-        $labels = collect($request->input('labels'))->filter(fn($label) => $label !== null);
-        $task->labels()->sync($labels);
-
+        $task->labels()->attach($request->input('labels'));
 
         flash(__('messages.task_store_success'))->success();
 
