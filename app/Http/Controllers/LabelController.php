@@ -59,7 +59,7 @@ class LabelController extends Controller
         $label = new Label();
         $label->fill($data);
 
-        $label->created_by_id = Auth::user()->id;
+        $label->createdBy()->associate(Auth::id());
 
         $label->save();
 

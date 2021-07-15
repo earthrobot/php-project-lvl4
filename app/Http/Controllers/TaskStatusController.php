@@ -59,7 +59,7 @@ class TaskStatusController extends Controller
 
         $taskStatus = new TaskStatus();
         $taskStatus->fill($data);
-        $taskStatus->created_by_id = Auth::user()->id;
+        $taskStatus->createdBy()->associate(Auth::id());
         $taskStatus->save();
 
         flash(__('messages.status_store_success'))->success();
